@@ -35,26 +35,55 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
       showCart={true}
     >
       {/* Hero Section */}
-      <section className="bg-background py-12 border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl font-bold text-foreground mb-4">
-            Discover Our Products
-          </h1>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Find the best products at the best price. Guaranteed quality and fast shipping.
-          </p>
+      <section className="relative overflow-hidden bg-gradient-to-br from-[hsl(var(--hero-gradient-from))] to-[hsl(var(--hero-gradient-to))]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="text-left space-y-6">
+              <h1 className="text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+                Audio y Carga
+                <span className="block text-accent">Premium</span>
+              </h1>
+              <p className="text-xl text-muted-foreground max-w-xl">
+                Descubre la excelencia en audio inalámbrico y accesorios de carga. Productos originales con garantía oficial.
+              </p>
+              <div className="flex gap-4">
+                <a href="#products">
+                  <Button size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+                    Explorar Productos
+                  </Button>
+                </a>
+                <a href="#collections">
+                  <Button size="lg" variant="outline">
+                    Ver Colecciones
+                  </Button>
+                </a>
+              </div>
+            </div>
+            <div className="relative h-[400px] lg:h-[500px]">
+              <img 
+                src="/hero.jpg" 
+                alt="AirPods Premium" 
+                className="w-full h-full object-contain"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Collections Section */}
       {!loadingCollections && collections.length > 0 && (
-        <section id="collections" className="py-12 bg-muted/30">
+        <section id="collections" className="py-16 bg-muted/20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-foreground mb-8">
-              Our Collections
-            </h2>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
+                Nuestras Colecciones
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Explora nuestras categorías cuidadosamente seleccionadas
+              </p>
+            </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {collections.map((collection) => (
                 <CollectionCard 
                   key={collection.id} 
@@ -68,21 +97,29 @@ export const IndexUI = ({ logic }: IndexUIProps) => {
       )}
 
       {/* Products Section */}
-      <section id="products" className="py-12">
+      <section id="products" className="py-16 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold text-foreground">
-              {selectedCollectionId 
-                ? `Products from ${collections.find(c => c.id === selectedCollectionId)?.name || 'Collection'}` 
-                : 'Featured Products'
-              }
-            </h2>
+          <div className="flex items-center justify-between mb-10">
+            <div>
+              <h2 className="text-3xl font-bold text-foreground mb-2">
+                {selectedCollectionId 
+                  ? collections.find(c => c.id === selectedCollectionId)?.name 
+                  : 'Productos Destacados'
+                }
+              </h2>
+              <p className="text-muted-foreground">
+                {selectedCollectionId 
+                  ? collections.find(c => c.id === selectedCollectionId)?.description 
+                  : 'Descubre nuestra selección premium de productos Apple'
+                }
+              </p>
+            </div>
             {selectedCollectionId && (
               <Button 
                 variant="outline" 
                 onClick={handleShowAllProducts}
               >
-                See All Products
+                Ver Todos
               </Button>
             )}
           </div>
